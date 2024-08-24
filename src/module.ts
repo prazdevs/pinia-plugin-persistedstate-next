@@ -1,9 +1,10 @@
 import {
+  addImports,
   addPlugin,
   createResolver,
   defineNuxtModule,
   hasNuxtModule,
-  useLogger
+  useLogger,
 } from '@nuxt/kit'
 
 export interface ModuleOptions {}
@@ -17,15 +18,20 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {},
-  setup(_options, nuxt) {
+  setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
     const logger = useLogger()
 
-    if(!hasNuxtModule('@pinia/nuxt', nuxt)) {
+    if (!hasNuxtModule('@pinia/nuxt', nuxt)) {
       logger.warn('The `@pinia/nuxt` module was not found, `pinia-plugin-persistedstate/nuxt` will not work.')
       return
     }
 
+    addImports({
+      name: 'storages',
+      from: resolver.resolve('./runtime/storages'),
+      as: 'piniaPluginPersistedstate',
+    })
     addPlugin(resolver.resolve('./runtime/plugin'))
   },
 })

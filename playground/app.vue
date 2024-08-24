@@ -1,8 +1,12 @@
-<script setup>
+<script setup lang="ts">
+const cookieStore = useCookieStore()
 </script>
 
 <template>
-  <div>
-    Nuxt module playground!
-  </div>
+  <main>
+    <label>
+      {{ cookieStore.$id }}
+      <input v-model="cookieStore.username">
+    </label>
+  </main>
 </template>

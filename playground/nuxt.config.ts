@@ -1,12 +1,12 @@
 export default defineNuxtConfig({
   compatibilityDate: {
-    default: '2024-08-24'
+    default: '2024-08-24',
   },
   devtools: {
-    enabled: true
+    enabled: true,
   },
   modules: [
     '@pinia/nuxt',
-    '../src/module'
+    '../src/module',
   ],
 })
