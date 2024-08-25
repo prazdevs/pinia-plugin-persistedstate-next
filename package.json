@@ -19,21 +19,30 @@
     "type": "git",
     "url": "https://github.com/prazdevs/pinia-plugin-persistedstate"
   },
-  "keywords": ["pinia", "pinia-plugin", "nuxt-module"],
+  "keywords": [
+    "pinia",
+    "pinia-plugin",
+    "nuxt-module"
+  ],
   "exports": {
     ".": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+      "types": "./dist/plugin.d.ts",
+      "import": "./dist/plugin.js"
+    },
+    "./nuxt": {
+      "types": "./dist/nuxt/types.d.mts",
+      "import": "./dist/nuxt/module.mjs"
     }
   },
-  "main": "./dist/module.cjs",
-  "types": "./dist/types.d.ts",
+  "main": "./dist/plugin.js",
+  "types": "./dist/plugin.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxt-module-build build",
+    "prepack": "nuxt-module-build build --outDir dist/nuxt",
+    "build:plugin": "tsup src/plugin.ts --dts --format esm",
+    "build:module": "nuxt-module-build build --outDir dist/nuxt",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
@@ -45,7 +54,9 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.13.0"
+    "@nuxt/kit": "^3.13.0",
+    "defu": "^6.1.4",
+    "destr": "^2.0.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.27.1",
@@ -58,6 +69,7 @@
     "eslint": "^9.9.1",
     "jiti": "^1.21.6",
     "nuxt": "^3.13.0",
+    "tsup": "^8.2.4",
     "typescript": "latest",
     "vitest": "^2.0.5",
     "vue-tsc": "^2.0.29"

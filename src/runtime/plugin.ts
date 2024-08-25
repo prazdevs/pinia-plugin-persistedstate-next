@@ -1,43 +1,21 @@
-import type { Pinia, PiniaPluginContext } from 'pinia'
 import { destr } from 'destr'
-import { defu } from 'defu'
+import type { Pinia, PiniaPluginContext } from 'pinia'
 import type { Persistence } from '../types'
+import { persist } from '../core'
 import { storages } from './storages'
 import { defineNuxtPlugin, useNuxtApp } from '#app'
 
-function piniaPlugin({ store, options: { persist } }: PiniaPluginContext) {
+function piniaPlugin(context: PiniaPluginContext) {
   const nuxtApp = useNuxtApp()
 
-  if (!persist) {
-    return
-  }
-
-  const persistences = (Array.isArray(persist) ? persist : [persist]).map(p => defu(p, {
-    key: store.$id,
-    serializer: {
+  persist(context, p => ({
+    key: p.key ?? context.store.$id,
+    serializer: p.serializer ?? {
       serialize: data => JSON.stringify(data),
       deserialize: data => destr(data),
     },
-    storage: storages.cookies,
-  } satisfies Persistence))
-
-  persistences.forEach((p) => {
-    nuxtApp.runWithContext(() => {
-      const stored = p.storage.getItem(p.key)
-      if (stored) {
-        store.$patch(p.serializer.deserialize(stored))
-      }
-    })
-
-    store.$subscribe((mutation, state) => {
-      nuxtApp.runWithContext(() => {
-        const toStore = p.serializer.serialize(state)
-        p.storage.setItem(p.key, toStore)
-      })
-    }, {
-      detached: true,
-    })
-  })
+    storage: p.storage ?? storages.cookies,
+  } satisfies Persistence), nuxtApp.runWithContext)
 }
 
 export default defineNuxtPlugin(({ $pinia }) => {
