@@ -7,7 +7,7 @@ import {
   useLogger,
 } from '@nuxt/kit'
 
-export interface ModuleOptions {}
+interface ModuleOptions {}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -18,7 +18,7 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {},
-  setup(options, nuxt) {
+  setup(_options, nuxt) {
     const resolver = createResolver(import.meta.url)
     const logger = useLogger()
 

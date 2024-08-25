@@ -1,15 +1,17 @@
-import { destr } from 'destr'
 import type { Pinia, PiniaPluginContext } from 'pinia'
+import { destr } from 'destr'
 import type { Persistence } from '../types'
-import { persist } from '../core'
+import { createPersistence } from '../core'
 import { storages } from './storages'
+
 import { defineNuxtPlugin, useNuxtApp } from '#app'
 
 function piniaPlugin(context: PiniaPluginContext) {
   const nuxtApp = useNuxtApp()
 
-  persist(context, p => ({
+  createPersistence(context, p => ({
     key: p.key ?? context.store.$id,
+    debug: p.debug,
     serializer: p.serializer ?? {
       serialize: data => JSON.stringify(data),
       deserialize: data => destr(data),

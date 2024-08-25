@@ -1,7 +1,7 @@
 {
   "name": "pinia-plugin-persistedstate",
   "type": "module",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-alpha.2",
   "description": "Configurable persistence and rehydration of Pinia stores.",
   "author": "Sacha Bouillez <hi@praz.dev> (https://praz.dev)",
   "license": "MIT",
@@ -26,22 +26,22 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/plugin.d.ts",
-      "import": "./dist/plugin.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./nuxt": {
       "types": "./dist/nuxt/types.d.mts",
       "import": "./dist/nuxt/module.mjs"
     }
   },
-  "main": "./dist/plugin.js",
-  "types": "./dist/plugin.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxt-module-build build --outDir dist/nuxt",
-    "build:plugin": "tsup src/plugin.ts --dts --format esm",
+    "build": "pnpm build:plugin && pnpm build:module",
+    "build:plugin": "tsup src/index.ts --dts --format esm",
     "build:module": "nuxt-module-build build --outDir dist/nuxt",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
