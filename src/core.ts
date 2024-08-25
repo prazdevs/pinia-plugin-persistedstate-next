@@ -1,9 +1,21 @@
-import type { PiniaPluginContext, StateTree, Store } from 'pinia'
+import type { PiniaPluginContext, StateTree, Store, _ActionsTree, _GettersTree } from 'pinia'
+import { deepOmitUnsafe, deepPickUnsafe } from 'deep-pick-omit'
 import type { Persistence, PersistenceOptions } from './types'
 
 function hydrateStore(
   store: Store,
-  { storage, serializer, key, debug, beforeHydrate, afterHydrate }: Persistence,
+  {
+    storage,
+    serializer,
+    key,
+    debug,
+    pick,
+    omit,
+    unsafeOmit,
+    unsafePick,
+    beforeHydrate,
+    afterHydrate,
+  }: Persistence,
   runHooks = true,
 ) {
   try {
@@ -11,8 +23,20 @@ function hydrateStore(
       beforeHydrate?.(store)
 
     const fromStorage = storage.getItem(key)
-    if (fromStorage)
-      store.$patch(serializer.deserialize(fromStorage))
+    if (fromStorage) {
+      const deserialized = serializer.deserialize(fromStorage)
+      const picked = pick
+        ? deepPickUnsafe(deserialized, pick)
+        : unsafePick
+          ? deepPickUnsafe(deserialized, unsafePick)
+          : deserialized
+      const omitted = omit
+        ? deepOmitUnsafe(picked, omit)
+        : unsafeOmit
+          ? deepOmitUnsafe(picked, unsafeOmit)
+          : picked
+      store.$patch(omitted)
+    }
 
     if (runHooks)
       afterHydrate?.(store)
@@ -25,14 +49,35 @@ function hydrateStore(
 
 function persistState(
   state: StateTree,
-  { storage, serializer, key, debug, beforePersist, afterPersist }: Persistence,
+  {
+    storage,
+    serializer,
+    key,
+    debug,
+    pick,
+    omit,
+    unsafePick,
+    unsafeOmit,
+    beforePersist,
+    afterPersist,
+  }: Persistence,
   runHooks = true,
 ) {
   try {
     if (runHooks)
       beforePersist?.(state)
 
-    const toStorage = serializer.serialize(state)
+    const picked = pick
+      ? deepPickUnsafe(state, pick)
+      : unsafePick
+        ? deepPickUnsafe(state, unsafePick)
+        : state
+    const omitted = omit
+      ? deepOmitUnsafe(picked, omit)
+      : unsafeOmit
+        ? deepOmitUnsafe(picked, unsafeOmit)
+        : picked
+    const toStorage = serializer.serialize(omitted)
     storage.setItem(key, toStorage)
 
     if (runHooks)
@@ -54,11 +99,13 @@ export function createPersistence(
   if (!persist)
     return
 
-  const persistences = (
-    Array.isArray(persist)
-      ? persist
-      : [typeof persist === 'boolean' ? {} : persist]
-  ).map(optionsParser)
+  const persistenceOptions = Array.isArray(persist)
+    ? persist
+    : persist === true
+      ? [{}]
+      : [persist]
+
+  const persistences = persistenceOptions.map(optionsParser)
 
   store.$hydrate = ({ runHooks = true } = {}) => {
     persistences.forEach((p) => {

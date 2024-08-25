@@ -17,6 +17,12 @@ function piniaPlugin(context: PiniaPluginContext) {
       deserialize: data => destr(data),
     },
     storage: p.storage ?? storages.cookies,
+    beforeHydrate: p.beforeHydrate,
+    afterHydrate: p.afterHydrate,
+    beforePersist: p.beforePersist,
+    afterPersist: p.afterPersist,
+    pick: p.pick,
+    omit: p.omit,
   } satisfies Persistence), nuxtApp.runWithContext)
 }
 
