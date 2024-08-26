@@ -11,8 +11,7 @@ function hydrateStore(
     debug,
     pick,
     omit,
-    unsafeOmit,
-    unsafePick,
+
     beforeHydrate,
     afterHydrate,
   }: Persistence,
@@ -27,14 +26,11 @@ function hydrateStore(
       const deserialized = serializer.deserialize(fromStorage)
       const picked = pick
         ? deepPickUnsafe(deserialized, pick)
-        : unsafePick
-          ? deepPickUnsafe(deserialized, unsafePick)
-          : deserialized
+
+        : deserialized
       const omitted = omit
         ? deepOmitUnsafe(picked, omit)
-        : unsafeOmit
-          ? deepOmitUnsafe(picked, unsafeOmit)
-          : picked
+        : picked
       store.$patch(omitted)
     }
 
@@ -56,8 +52,6 @@ function persistState(
     debug,
     pick,
     omit,
-    unsafePick,
-    unsafeOmit,
     beforePersist,
     afterPersist,
   }: Persistence,
@@ -69,14 +63,10 @@ function persistState(
 
     const picked = pick
       ? deepPickUnsafe(state, pick)
-      : unsafePick
-        ? deepPickUnsafe(state, unsafePick)
-        : state
+      : state
     const omitted = omit
       ? deepOmitUnsafe(picked, omit)
-      : unsafeOmit
-        ? deepOmitUnsafe(picked, unsafeOmit)
-        : picked
+      : picked
     const toStorage = serializer.serialize(omitted)
     storage.setItem(key, toStorage)
 

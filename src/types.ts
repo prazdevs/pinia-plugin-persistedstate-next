@@ -29,7 +29,7 @@ export interface Serializer {
   deserialize: (data: string) => StateTree
 }
 
-export type Persistence<State extends StateTree = StateTree> = {
+export interface Persistence<State extends StateTree = StateTree> {
   /**
    * Storage key to use.
    * @default $store.id
@@ -73,32 +73,17 @@ export type Persistence<State extends StateTree = StateTree> = {
   afterPersist?: (state: State) => void
 
   /**
-   * Type-safe dot-notation paths to pick from state before persisting.
+   * Dot-notation paths to pick from state before persisting.
    */
-  pick?: string[]
+  pick?: Path<State>[] | string[]
+
   /**
-   * Type-safe dot-notation paths to omit from state before persisting.
+   * Dot-notation paths to omit from state before persisting.
    */
-  omit?: string[]
-  /**
-   * Dot-notation paths to pick from state before persisting, prefer `pick` for type safety.
-   * Will be ignored if `pick` is used at the same time.
-   */
-  unsafePick?: string[]
-  /**
-   * Dot-notation paths to omit from state before persisting, prefer `omit` for type safety.
-   * Will be ignored if `omit` is used at the same time.
-   */
-  unsafeOmit?: string[]
-} & {
-  pick?: string[]
-  omit?: string[]
+  omit?: Path<State>[] | string[]
 }
 
-export type PersistenceOptions<State extends StateTree = StateTree> = Partial<Persistence<State>> & {
-  pick?: Path<State>[]
-  omit?: Path<State>[]
-}
+export type PersistenceOptions<State extends StateTree = StateTree> = Partial<Persistence<State>>
 
 declare module 'pinia' {
   // eslint-disable-next-line unused-imports/no-unused-vars

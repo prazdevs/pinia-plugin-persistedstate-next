@@ -12,6 +12,12 @@ function createPersistedState() {
         deserialize: data => destr(data),
       },
       storage: p.storage ?? window.localStorage,
+      beforeHydrate: p.beforeHydrate,
+      afterHydrate: p.afterHydrate,
+      beforePersist: p.beforePersist,
+      afterPersist: p.afterPersist,
+      pick: p.pick,
+      omit: p.omit,
     }))
   }
 }
