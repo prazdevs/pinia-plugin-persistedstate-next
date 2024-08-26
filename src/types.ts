@@ -1,4 +1,4 @@
-import type { StateTree, Store } from 'pinia'
+import type { PiniaPluginContext, StateTree, Store } from 'pinia'
 import type { Path } from 'deep-pick-omit'
 
 export interface Storage {
@@ -55,22 +55,22 @@ export interface Persistence<State extends StateTree = StateTree> {
   /**
    * Hook called before hydrating store.
    */
-  beforeHydrate?: (store: Store) => void
+  beforeHydrate?: (context: PiniaPluginContext) => void
 
   /**
    * Hook called after hydrating store.
    */
-  afterHydrate?: (store: Store) => void
+  afterHydrate?: (context: PiniaPluginContext) => void
 
   /**
    * Hook called before persisting state.
    */
-  beforePersist?: (state: State) => void
+  beforePersist?: (context: PiniaPluginContext) => void
 
   /**
    * Hook called after persisting state.
    */
-  afterPersist?: (state: State) => void
+  afterPersist?: (context: PiniaPluginContext) => void
 
   /**
    * Dot-notation paths to pick from state before persisting.

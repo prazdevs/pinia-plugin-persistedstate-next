@@ -14,11 +14,12 @@ function hydrateStore(
     beforeHydrate,
     afterHydrate,
   }: Persistence,
+  context: PiniaPluginContext,
   runHooks = true,
 ) {
   try {
     if (runHooks)
-      beforeHydrate?.(store)
+      beforeHydrate?.(context)
 
     const fromStorage = storage.getItem(key)
     if (fromStorage) {
@@ -34,7 +35,7 @@ function hydrateStore(
     }
 
     if (runHooks)
-      afterHydrate?.(store)
+      afterHydrate?.(context)
   }
   catch (error) {
     if (debug)
@@ -54,11 +55,12 @@ function persistState(
     beforePersist,
     afterPersist,
   }: Persistence,
+  context: PiniaPluginContext,
   runHooks = true,
 ) {
   try {
     if (runHooks)
-      beforePersist?.(state)
+      beforePersist?.(context)
 
     const picked = pick
       ? deepPickUnsafe(state, pick)
@@ -70,7 +72,7 @@ function persistState(
     storage.setItem(key, toStorage)
 
     if (runHooks)
-      afterPersist?.(state)
+      afterPersist?.(context)
   }
   catch (error) {
     if (debug)
@@ -107,21 +109,21 @@ export function createPersistence(
 
   store.$hydrate = ({ runHooks = true } = {}) => {
     persistences.forEach((p) => {
-      runWithContext(() => hydrateStore(store, p, runHooks))
+      runWithContext(() => hydrateStore(store, p, context, runHooks))
     })
   }
 
   store.$persist = ({ runHooks = true } = {}) => {
     persistences.forEach((p) => {
-      runWithContext(() => persistState(store.$state, p, runHooks))
+      runWithContext(() => persistState(store.$state, p, context, runHooks))
     })
   }
 
   persistences.forEach((p) => {
-    runWithContext(() => hydrateStore(store, p))
+    runWithContext(() => hydrateStore(store, p, context))
 
     store.$subscribe(
-      (_mutation, state) => runWithContext(() => persistState(state, p)),
+      (_mutation, state) => runWithContext(() => persistState(state, p, context)),
       { detached: true },
     )
   })
