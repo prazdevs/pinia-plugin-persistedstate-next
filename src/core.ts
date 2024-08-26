@@ -1,5 +1,5 @@
-import type { PiniaPluginContext, StateTree, Store, _ActionsTree, _GettersTree } from 'pinia'
 import { deepOmitUnsafe, deepPickUnsafe } from 'deep-pick-omit'
+import type { PiniaPluginContext, StateTree, Store, StoreGeneric } from 'pinia'
 import type { Persistence, PersistenceOptions } from './types'
 
 function hydrateStore(
@@ -11,7 +11,6 @@ function hydrateStore(
     debug,
     pick,
     omit,
-
     beforeHydrate,
     afterHydrate,
   }: Persistence,
@@ -84,10 +83,19 @@ export function createPersistence(
   optionsParser: (p: PersistenceOptions) => Persistence,
   runWithContext: (fn: () => void) => void = fn => fn(),
 ) {
-  const { store, options: { persist } } = context
+  const { pinia, store, options: { persist } } = context
 
   if (!persist)
     return
+
+  // HMR handling, ignore stores created as 'hot' stores
+  if (!(store.$id in pinia.state.value)) {
+    // @ts-expect-error `_s` is a stripped @internal
+    const originalStore: StoreGeneric = pinia._s.get(store.$id.replace('__hot:', ''))
+    if (originalStore)
+      Promise.resolve().then(() => originalStore.$persist())
+    return
+  }
 
   const persistenceOptions = Array.isArray(persist)
     ? persist
