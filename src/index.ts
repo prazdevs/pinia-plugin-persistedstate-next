@@ -28,6 +28,6 @@ function createPersistedState() {
  */
 const piniaPluginPersistedstate = createPersistedState()
 
-export { type Persistence, type PersistenceOptions } from './types'
+export type { Persistence, PersistenceOptions, Serializer, Storage } from './types'
 
 export default piniaPluginPersistedstate
