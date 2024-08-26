@@ -1,7 +1,11 @@
-import type { PiniaPluginContext, StateTree, Store } from 'pinia'
+import type { PiniaPluginContext, StateTree } from 'pinia'
 import type { Path } from 'deep-pick-omit'
 
-export interface Storage {
+/**
+ * Synchronous storage based on Web Storage API.
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Storage
+ */
+export interface StorageLike {
   /**
    * Get a key's value if it exists.
    */
@@ -13,6 +17,9 @@ export interface Storage {
   setItem: (key: string, value: string) => void
 }
 
+/**
+ * Serializer implementation to stringify/parse state.
+ */
 export interface Serializer {
   /**
    * Serialize state into string before storing.
