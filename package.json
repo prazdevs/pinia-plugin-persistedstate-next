@@ -5,23 +5,14 @@
   "description": "Configurable persistence and rehydration of Pinia stores.",
   "author": "Sacha Bouillez <hi@praz.dev> (https://praz.dev)",
   "license": "MIT",
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/prazdevs"
-    },
-    {
-      "type": "ko_fi",
-      "url": "https://ko-fi.com/prazdevs"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/prazdevs/pinia-plugin-persistedstate"
-  },
+  "repository": "github:prazdevs/pinia-plugin-persistedstate",
   "keywords": [
+    "vue",
+    "store",
     "pinia",
+    "persistence",
     "pinia-plugin",
+    "nuxt",
     "nuxt-module"
   ],
   "exports": {
@@ -41,7 +32,7 @@
   ],
   "scripts": {
     "build": "pnpm build:plugin && pnpm build:module",
-    "build:plugin": "tsup src/index.ts --dts --format esm",
+    "build:plugin": "tsup src/index.ts --clean --dts --format esm",
     "build:module": "nuxt-module-build build --outDir dist/nuxt",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
@@ -64,6 +55,7 @@
     "@nuxt/module-builder": "^0.8.3",
     "@nuxt/schema": "^3.13.0",
     "@nuxt/test-utils": "^3.14.1",
+    "@pinia/nuxt": "^0.5.4",
     "@types/node": "^22.5.0",
     "changelogen": "^0.5.5",
     "eslint": "^9.9.1",
