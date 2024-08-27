@@ -31,6 +31,9 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "pnpm build:plugin && pnpm build:module",
     "build:plugin": "tsup src/index.ts --clean --dts --format esm",
