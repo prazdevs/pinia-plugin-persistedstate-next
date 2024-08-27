@@ -41,14 +41,30 @@ pinia.use(piniaPluginPersistedstate)
 import { defineStore } from 'pinia'
 
 export const useStore = defineStore('store', {
-  state: () => {
-    return {
-      someState: 'hello pinia',
-    }
-  },
+  state: () => ({
+    someState: 'hello pinia',
+  }),
   persist: true,
 })
 ```
+
+## Configuration
+
+You can configure how a store is persisted by specifying options to the `persist` property:
+
+```ts
+export const useStore = defineStore('store', () => {
+  const someState = ref('hello pinia')
+  return { someState }
+}, {
+  persist: {
+    storage: sessionStorage,
+    pick: ['someState'],
+  }
+})
+```
+
+All the available configuration options are explained [here](https://prazdevs.github.io/pinia-plugin-persistedstate/guide/config).
 
 ## Usage with Nuxt
 
@@ -58,12 +74,12 @@ Nuxt support comes out of the box thanks to the included module. You just need t
 export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt', // required
-    'pinia-plugin-persistedstate/nuxt'
+    'pinia-plugin-persistedstate/nuxt',
   ],
 })
 ```
 
-Persistence within Nuxt is achieved via `cookies` by default to be SSR-friendly.
+More information on storages and configuration in Nuxt [here](https://prazdevs.github.io/pinia-plugin-persistedstate/frameworks/nuxt-3).
 
 ## Limitations
 
