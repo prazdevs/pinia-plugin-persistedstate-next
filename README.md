@@ -60,7 +60,7 @@ export const useStore = defineStore('store', () => {
   persist: {
     storage: sessionStorage,
     pick: ['someState'],
-  }
+  },
 })
 ```
 

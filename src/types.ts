@@ -52,7 +52,7 @@ export interface Persistence<State extends StateTree = StateTree> {
   /**
    * Synchronous storage to persist the state.
    */
-  storage: Storage
+  storage: StorageLike
 
   /**
    * Serializer to serialize/deserialize state into storage.
