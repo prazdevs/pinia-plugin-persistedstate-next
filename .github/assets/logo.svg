@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="306.4" height="430.44">
+  <path fill="none" stroke="#fd5e87" stroke-width="14" d="M31.85 397.04V212.27a26.4 26.4 0 0 1 26.4-26.4H205.7a26.4 26.4 0 0 1 18.66 7.74l37.32 37.32a26.4 26.4 0 0 1 7.74 18.66v147.45a26.4 26.4 0 0 1-26.4 26.4H58.25a26.4 26.4 0 0 1-26.4-26.4Z"/>
+  <path fill="none" stroke="#fd5e87" stroke-width="14" d="M105.76 249.13h89.75a7.92 7.92 0 0 0 7.92-7.92v-47.42a7.92 7.92 0 0 0-7.92-7.92h-89.75a7.92 7.92 0 0 0-7.92 7.92v47.42a7.92 7.92 0 0 0 7.92 7.92zM71.45 357.56v65.88h158.37v-65.88a7.92 7.92 0 0 0-7.92-7.92H79.36a7.92 7.92 0 0 0-7.91 7.92zm29.13-252.43C69.7 71.38 25.48 61.85 15.85 71.02c-8.98 8.55-20.55 78.6 18.58 135.97m214.95 16.27c39.5-37.65 55.9-109.75 47.77-122.56-7.12-11.21-59.84-6.9-98.1 18.2"/>
+  <path fill="none" stroke="#fd5e87" stroke-width="14" d="M186.1 188.18a175.4 175.4 0 0 0 5.7-17.82c3.1-11.68 5.44-25.07 7.25-39.87 7.27-59.2-22.7-121.78-36.18-123.44C149.4 5.4 104.1 58.73 96.82 117.93c-3.63 29.6-3.72 53.85 2.17 71.72"/>
+  <path fill="none" stroke="#fd5e87" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" d="M168.95 320.71c-6.47 5.26-13.94 7.4-22.42 6.44-8.48-.97-14.76-4.5-18.85-10.56"/>
+  <circle cx="86.39" cy="290.33" r="21.45" fill="none" stroke="#fd5e87" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" paint-order="stroke markers fill"/>
+  <circle cx="91.92" cy="289.42" r="7" fill="#fd5e87" fill-rule="evenodd" paint-order="stroke markers fill"/>
+  <circle cx="211.37" cy="293.61" r="7" fill="#fd5e87" fill-rule="evenodd" paint-order="stroke markers fill"/>
+  <circle cx="216.64" cy="295.25" r="21.45" fill="none" stroke="#fd5e87" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" paint-order="stroke markers fill"/>
+</svg>
