@@ -1,8 +1,16 @@
 import type { PiniaPluginContext } from 'pinia'
 import { destr } from 'destr'
 import { createPersistence } from './core'
+import type { PersistenceOptions, Serializer, StorageLike } from './types'
 
-function createPersistedState() {
+export type { PersistenceOptions, Serializer, StorageLike }
+export type PluginOptions = Pick<PersistenceOptions, 'storage'>
+
+/**
+ * Create a Pinia persistence plugin.
+ * @see https://prazdevs.github.io/pinia-plugin-persistedstate/
+ */
+export function createPersistedState(options: PluginOptions = {}) {
   return function (context: PiniaPluginContext) {
     createPersistence(context, p => ({
       key: p.key ?? context.store.$id,
@@ -11,7 +19,7 @@ function createPersistedState() {
         serialize: data => JSON.stringify(data),
         deserialize: data => destr(data),
       },
-      storage: p.storage ?? window.localStorage,
+      storage: p.storage ?? options.storage ?? window.localStorage,
       beforeHydrate: p.beforeHydrate,
       afterHydrate: p.afterHydrate,
       beforePersist: p.beforePersist,
@@ -26,8 +34,4 @@ function createPersistedState() {
  * Pinia plugin to persist stores.
  * @see https://prazdevs.github.io/pinia-plugin-persistedstate/
  */
-const piniaPluginPersistedstate = createPersistedState()
-
-export type { Persistence, PersistenceOptions, Serializer, StorageLike } from './types'
-
-export default piniaPluginPersistedstate
+export default createPersistedState()
