@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/prazdevs/pinia-plugin-persistedstate-next/main/.github/assets/logo.svg" style="width: 100px">
+</p>
+
 <h1 align="center">
   pinia-plugin-persistedstate
 </h1>
