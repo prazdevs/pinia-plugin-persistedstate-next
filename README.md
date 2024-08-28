@@ -1,3 +1,5 @@
+
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/prazdevs/pinia-plugin-persistedstate-next/main/.github/assets/logo.svg" style="width: 100px">
 </p>
@@ -16,6 +18,9 @@
 <p align="center">
   <a href="https://prazdevs.github.io/pinia-plugin-persistedstate"><b>Documentation</b></a>
 </p>
+
+> [!IMPORTANT]
+> We are actively looking for contributors to help us translate the documentation in various language (especially Chinese) to improve user experience. If you are interested, open an issue about it!
 
 ## Features
 
